@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Rutina de Musculación</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente Inter para estética */
+        :root { font-family: 'Inter', sans-serif; }
+        /* Estilos para el botón de completar */
+        .complete-button {
+            transition: all 0.2s;
+        }
+        .completed {
+            background-color: #10B981; /* Esmeralda 500 */
+            color: white;
+            pointer-events: none; /* Deshabilitar clics una vez completado */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-6 sm:p-10">
+        <!-- Título y Selector de Día -->
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">Mi Rutina de Musculación</h1>
+        <p class="text-gray-600 mb-6 border-b pb-4">Seguimiento de Lunes a Viernes (Máx. 50 min/sesión).</p>
+
+        <!-- Selector de Día -->
+        <div class="flex flex-wrap gap-2 mb-8" id="day-selector-container">
+            <!-- Los botones se insertarán aquí por JS -->
+        </div>
+
+        <!-- Encabezado del Día Actual -->
+        <div class="bg-indigo-600 text-white p-4 rounded-t-lg shadow-md flex justify-between items-center">
+            <h2 class="text-xl font-bold" id="current-day-title"></h2>
+            <span class="text-sm font-light italic" id="day-focus"></span>
+        </div>
+
+        <!-- Lista de Ejercicios -->
+        <div id="exercise-list-container" class="border border-gray-200 rounded-b-lg p-4 divide-y divide-gray-100">
+            <!-- La rutina se insertará aquí por JS -->
+        </div>
+
+        <!-- Instrucciones -->
+        <p class="mt-8 text-sm text-gray-500">
+            * Haz clic en el botón "Completar" para marcar el ejercicio realizado. El progreso se restablece al recargar la página.
+        </p>
+    </div>
+
+    <script>
+        const routine = {
+            "LUNES": {
+                focus: "Empuje Superior y Pierna",
+                exercises: [
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave (cinta/elíptica) y movimientos articulares para preparar músculos y articulaciones." },
+                    { name: "Prensa de Piernas", setsReps: "3 x 10-12", desc: "Empuja la plataforma con fuerza, enfocándote en la contracción de cuádriceps y glúteos. Controla el peso al bajar." },
+                    { name: "Press de Banca con Mancuernas", setsReps: "3 x 8-10", desc: "Acuéstate en el banco y empuja las mancuernas hacia arriba, buscando un rango de movimiento profundo para trabajar el pecho." },
+                    { name: "Extensión de Cuádriceps (Máquina)", setsReps: "3 x 12-15", desc: "Siéntate y extiende las piernas, aislando el músculo cuádriceps en la parte delantera." },
+                    { name: "Press Militar con Mancuernas (Sentado)", setsReps: "3 x 10", desc: "Sube las mancuernas por encima de la cabeza de manera controlada. Excelente para hombros (deltoides)." },
+                    { name: "Extensiones de Tríceps (Polea Alta)", setsReps: "3 x 12-15", desc: "Empuja la barra hacia abajo, sintiendo la contracción del tríceps al final del movimiento." }
+                ]
+            },
+            "MARTES": {
+                focus: "Tirón Superior y Abdomen",
+                exercises: [
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movilidad de hombros y espalda." },
+                    { name: "Jalón al Pecho (Polea Alta)", setsReps: "3 x 10-12", desc: "Tira de la barra hacia el pecho, enfocándote en llevar los codos hacia atrás para contraer la espalda (ancho)." },
+                    { name: "Remo en Máquina o Polea Baja", setsReps: "3 x 10-12", desc: "Tira hacia tu abdomen manteniendo la espalda recta y saca pecho. Trabaja el grosor de la espalda." },
+                    { name: "Flexión de Bíceps con Barra EZ", setsReps: "3 x 10", desc: "Flexiona los brazos sin mover los codos, aislando el bíceps. Evita el impulso del cuerpo." },
+                    { name: "Pájaro (Elevación Posterior)", setsReps: "3 x 15", desc: "Inclínate (casi paralelo al suelo) y eleva las mancuernas hacia los lados para trabajar la parte posterior del hombro." },
+                    { name: "Plancha (Plank)", setsReps: "3 x 45-60 seg", desc: "Mantén el cuerpo recto como una tabla, contrayendo fuertemente el abdomen y glúteos (Core)." }
+                ]
+            },
+            "MIÉRCOLES": {
+                focus: "Pierna Completa",
+                exercises: [
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y estiramiento dinámico de piernas." },
+                    { name: "Sentadilla en Multipower o Hack", setsReps: "3 x 10", desc: "Utiliza la máquina para estabilizar el movimiento y enfocarte en bajar hasta que el muslo esté paralelo al suelo." },
+                    { name: "Curl Femoral (Tumbado o Sentado)", setsReps: "3 x 12-15", desc: "Flexiona la pierna hacia el glúteo para aislar los isquiotibiales (parte trasera del muslo)." },
+                    { name: "Zancadas Estáticas con Mancuernas", setsReps: "3 x 10-12 (por pierna)", desc: "Mantente estático en posición de zancada, bajando y subiendo. Mantiene la rodilla de adelante alineada con el tobillo." },
+                    { name: "Elevación de Gemelos (Máquina)", setsReps: "3 x 15-20", desc: "Baja completamente los talones y sube todo lo posible, concentrándose en el rango de movimiento." },
+                    { name: "Hip Thrust (Empuje de Cadera)", setsReps: "3 x 12-15", desc: "Apoya la parte alta de la espalda en un banco. Empuja la cadera hacia el techo y contrae fuerte los glúteos." }
+                ]
+            },
+            "JUEVES": {
+                focus: "Empuje y Tirón General",
+                exercises: [
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movimientos circulares de hombros." },
+                    { name: "Press Inclinado (Mancuernas)", setsReps: "3 x 8-10", desc: "Acuéstate en el banco inclinado y empuja las mancuernas, dando énfasis a la parte superior del pecho." },
+                    { name: "Remo con Barra (Agarre Supino)", setsReps: "3 x 10", desc: "Tira la barra hacia el abdomen con el agarre de palma hacia arriba. Fortalece la espalda baja/media." },
+                    { name: "Elevaciones Laterales (Mancuernas)", setsReps: "3 x 12-15", desc: "Levanta las mancuernas hacia los lados, manteniendo los brazos casi rectos. Para los hombros laterales. Peso ligero." },
+                    { name: "Face Pull (Tirón a la Cara)", setsReps: "3 x 15", desc: "Tira de una cuerda hacia tu cara en la polea. Fortalece el manguito rotador y mejora la postura." },
+                    { name: "Superserie Bíceps/Tríceps", setsReps: "3 x 10 / 12", desc: "Realiza Curl Martillo (bíceps) inmediatamente seguido de Fondos en Banco (tríceps). Descansa solo al terminar ambos." }
+                ]
+            },
+            "VIERNES": {
+                focus: "Refuerzo y Cardio HIIT",
+                exercises: [
+                    { name: "Calentamiento (Cardio)", setsReps: "1 x 5 min", desc: "5 minutos de cardio para preparar el cuerpo para el entrenamiento de alta intensidad." },
+                    { name: "Peso Muerto Rumano (Mancuernas)", setsReps: "3 x 10-12", desc: "Mantén las rodillas semi-flexionadas y baja las mancuernas deslizando la cadera hacia atrás. Estira femorales y glúteos." },
+                    { name: "Abdominales en Cable (Polea Alta)", setsReps: "3 x 15-20", desc: "Arrodíllate frente a la polea y flexiona el torso hacia el suelo, concentrándote en el abdomen." },
+                    { name: "Extensión de Tríceps por Encima de la Cabeza", setsReps: "3 x 12", desc: "Sujeta una mancuerna o barra con ambas manos y bájala detrás de la cabeza, estirando el tríceps." },
+                    { name: "Máquina de Abducción de Cadera", setsReps: "3 x 15-20", desc: "Empuja las piernas hacia afuera, trabajando la parte lateral de los glúteos." },
+                    { name: "Cardio de Alta Intensidad (HIIT)", setsReps: "8 x 1 min", desc: "Alterna 30 segundos de sprint (máximo esfuerzo) con 30 segundos de caminata rápida en la cinta (recuperación). Total: 8 minutos." }
+                ]
+            }
+        };
+
+        const dayNames = { 1: "LUNES", 2: "MARTES", 3: "MIÉRCOLES", 4: "JUEVES", 5: "VIERNES" };
+        const weekDays = ["LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES"];
+
+        const listContainer = document.getElementById('exercise-list-container');
+        const titleElement = document.getElementById('current-day-title');
+        const focusElement = document.getElementById('day-focus');
+        const daySelectorContainer = document.getElementById('day-selector-container');
+        
+        // Objeto para llevar el registro de ejercicios completados en la sesión actual
+        let completedExercises = {};
+
+        // Función para renderizar el día seleccionado
+        function renderRoutine(dayKey) {
+            const dayData = routine[dayKey];
+            if (!dayData) {
+                listContainer.innerHTML = '<p class="p-4 text-center text-gray-500">¡Hoy es fin de semana! Día de descanso activo. Selecciona otro día si quieres ver la rutina.</p>';
+                titleElement.textContent = `¡FIN DE SEMANA! (${dayKey})`;
+                focusElement.textContent = '';
+                return;
+            }
+
+            titleElement.textContent = `Rutina de ${dayKey}`;
+            focusElement.textContent = `Foco: ${dayData.focus}`;
+            listContainer.innerHTML = ''; // Limpiar el contenedor
+
+            dayData.exercises.forEach((ex, index) => {
+                const exerciseId = `${dayKey}-${index}`;
+                
+                // Determinar si el ejercicio ya fue completado
+                const isCompleted = completedExercises[exerciseId];
+
+                const exerciseDiv = document.createElement('div');
+                exerciseDiv.className = 'p-5 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-indigo-50 transition duration-150';
+                
+                exerciseDiv.innerHTML = `
+                    <div class="mb-3 md:mb-0 md:w-3/5">
+                        <h3 class="text-lg font-semibold text-gray-900">${index + 1}. ${ex.name}</h3>
+                        <p class="text-sm text-gray-500 mt-1">${ex.desc}</p>
+                    </div>
+                    <div class="flex items-center gap-4 md:w-2/5 md:justify-end">
+                        <span class="text-sm font-medium text-indigo-600 w-24 text-center">${ex.setsReps}</span>
+                        <button 
+                            data-exercise-id="${exerciseId}"
+                            class="complete-button py-2 px-4 rounded-full text-sm font-bold shadow-md w-32 
+                                ${isCompleted ? 'completed' : 'bg-green-100 text-green-700 hover:bg-green-200'}"
+                            onclick="toggleCompletion('${exerciseId}', this)"
+                            ${isCompleted ? 'disabled' : ''}
+                        >
+                            ${isCompleted ? '✅ Completado' : 'Completar'}
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(exerciseDiv);
+            });
+            updateDaySelector(dayKey);
+        }
+
+        // Función para cambiar el estado de completado
+        function toggleCompletion(exerciseId, buttonElement) {
+            if (!completedExercises[exerciseId]) {
+                completedExercises[exerciseId] = true;
+                buttonElement.textContent = '✅ Completado';
+                buttonElement.classList.add('completed');
+                buttonElement.classList.remove('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+            }
+        }
+
+        // Función para generar los botones de selección de día
+        function createDaySelector() {
+            weekDays.forEach(day => {
+                const button = document.createElement('button');
+                button.textContent = day;
+                button.className = 'day-selector-btn py-2 px-4 rounded-lg text-sm font-semibold transition duration-150';
+                button.setAttribute('data-day', day);
+                button.onclick = () => renderRoutine(day);
+                daySelectorContainer.appendChild(button);
+            });
+        }
+
+        // Función para actualizar el estilo del botón seleccionado
+        function updateDaySelector(currentDay) {
+            document.querySelectorAll('.day-selector-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                if (btn.getAttribute('data-day') === currentDay) {
+                    btn.classList.add('bg-indigo-600', 'text-white');
+                    btn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                }
+            });
+        }
+
+        // Función para determinar el día actual
+        function getToday() {
+            // Lunes es 1, Domingo es 0. En JavaScript, Domingo es 0, Lunes es 1... Sábado es 6.
+            const date = new Date();
+            const dayIndex = date.getDay(); // 0 (Dom) - 6 (Sáb)
+            
+            let todayKey;
+            if (dayIndex >= 1 && dayIndex <= 5) {
+                // Mapear 1 (Lun) a "LUNES", 5 (Vie) a "VIERNES"
+                todayKey = dayNames[dayIndex];
+            } else {
+                // Fin de semana: 0 (Dom) y 6 (Sáb)
+                todayKey = dayIndex === 0 ? "DOMINGO" : "SÁBADO";
+            }
+            return todayKey;
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            createDaySelector();
+            const today = getToday();
+            // Solo renderizar si es un día de la semana definido en la rutina
+            if (weekDays.includes(today)) {
+                renderRoutine(today);
+            } else {
+                // Si es Sábado o Domingo, mostrar el Lunes por defecto
+                renderRoutine("LUNES"); 
+            }
+        });
+    </script>
+</body>
+</html>
