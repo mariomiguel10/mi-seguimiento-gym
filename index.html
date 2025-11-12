@@ -60,14 +60,39 @@
             text-decoration: none;
             cursor: pointer;
         }
+        /* Ajuste de diseño para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .exercise-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .exercise-details {
+                width: 100%;
+                order: 2; /* Mueve los detalles debajo del nombre */
+            }
+            .exercise-actions {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 1rem;
+                order: 3; /* Mueve la acción al final */
+            }
+            .exercise-image-and-sets {
+                order: 1; /* Mantiene el nombre del ejercicio arriba */
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen p-4 sm:p-8">
 
-    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-6 sm:p-10">
+    <div class="max-w-5xl mx-auto bg-white shadow-xl rounded-xl p-6 sm:p-10">
         <!-- Título y Selector de Día -->
         <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">Mi Rutina de Musculación</h1>
-        <p class="text-gray-600 mb-6 border-b pb-4">Seguimiento de Lunes a Viernes (Máx. 50 min/sesión).</p>
+        <p class="text-gray-600 mb-6 border-b pb-4">Seguimiento de Lunes a Viernes (Máx. 50 min/sesión) y Plan B en Casa.</p>
 
         <!-- Selector de Día -->
         <div class="flex flex-wrap gap-2 mb-8" id="day-selector-container">
@@ -100,6 +125,12 @@
     </div>
 
     <script>
+        // Función para generar la URL estática de placeholder.co
+        function getStaticImageUrl(exerciseName, color = '4f46e5', textColor = 'ffffff') {
+            const text = encodeURIComponent(exerciseName.toUpperCase().replace(/\s/g, '+'));
+            return `https://placehold.co/128x128/${color}/${textColor}?text=${text}`;
+        }
+
         const routine = {
             "LUNES": {
                 focus: "Empuje Superior y Pierna",
@@ -108,37 +139,43 @@
                         name: "Calentamiento (Cardio y Movilidad)", 
                         setsReps: "1 x 5 min", 
                         desc: "5 minutos de cardio suave (cinta/elíptica) y movimientos articulares para preparar músculos y articulaciones.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                        techDetails: "Objetivo: Aumentar la temperatura corporal y lubricar articulaciones. Técnica: Rodillas altas, rotación de hombros, círculos de cadera.",
+                        image_url: getStaticImageUrl("Calentamiento", 'f97316') 
                     },
                     { 
                         name: "Prensa de Piernas", 
                         setsReps: "3 x 10-12", 
                         desc: "Empuja la plataforma con fuerza, enfocándote en la contracción de cuádriceps y glúteos. Controla el peso al bajar.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRENSA+PIERNAS" 
+                        techDetails: "Máquina: Plataforma móvil. Posición: Rodillas a 90° al iniciar, pies separados a la altura de los hombros. Clave: No bloquear las rodillas en la extensión máxima.",
+                        image_url: getStaticImageUrl("Prensa + Cuádriceps", '10b981') 
                     },
                     { 
                         name: "Press de Banca con Mancuernas", 
                         setsReps: "3 x 8-10", 
                         desc: "Acuéstate en el banco y empuja las mancuernas hacia arriba, buscando un rango de movimiento profundo para trabajar el pecho.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRESS+BANCA+MANC." 
+                        techDetails: "Posición: Banco plano, mancuernas. Clave: Retraer las escápulas (juntar los omóplatos) y mantener los codos en un ángulo de 45° con el torso.",
+                        image_url: getStaticImageUrl("Press Banca + Pecho", '3b82f6') 
                     },
                     { 
                         name: "Extensión de Cuádriceps (Máquina)", 
                         setsReps: "3 x 12-15", 
                         desc: "Siéntate y extiende las piernas, aislando el músculo cuádriceps en la parte delantera.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=EXT.+CUÁDRICEPS" 
+                        techDetails: "Máquina: Rodillo bajo las espinillas. Clave: El eje de rotación de la máquina debe coincidir con la articulación de la rodilla. Controlar la fase negativa (al bajar el peso).",
+                        image_url: getStaticImageUrl("Extensión Cuádriceps", '10b981') 
                     },
                     { 
                         name: "Press Militar con Mancuernas (Sentado)", 
                         setsReps: "3 x 10", 
                         desc: "Sube las mancuernas por encima de la cabeza de manera controlada. Excelente para hombros (deltoides).", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRESS+MILITAR" 
+                        techDetails: "Posición: Banco con respaldo a 90°. Clave: Mantener la espalda pegada al respaldo. Las mancuernas bajan hasta la altura de los hombros sin balancear el torso.",
+                        image_url: getStaticImageUrl("Press Militar + Hombro", '6366f1') 
                     },
                     { 
                         name: "Extensiones de Tríceps (Polea Alta)", 
                         setsReps: "3 x 12-15", 
                         desc: "Empuja la barra hacia abajo, sintiendo la contracción del tríceps al final del movimiento.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=EXT.+TRÍCEPS+POLEA" 
+                        techDetails: "Polea: **Desde Arriba**. Agarre: Barra recta o cuerda. Clave: Mantener los codos fijos al lado del torso y solo mover el antebrazo. El movimiento sale del codo.",
+                        image_url: getStaticImageUrl("Extensiones Tríceps", 'ef4444') 
                     }
                 ]
             },
@@ -149,37 +186,43 @@
                         name: "Calentamiento (Cardio y Movilidad)", 
                         setsReps: "1 x 5 min", 
                         desc: "5 minutos de cardio suave y movilidad de hombros y espalda.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                        techDetails: "Objetivo: Preparar la articulación del hombro. Técnica: Círculos grandes de brazos hacia adelante y hacia atrás, rotaciones de tronco.",
+                        image_url: getStaticImageUrl("Calentamiento", 'f97316') 
                     },
                     { 
                         name: "Jalón al Pecho (Polea Alta)", 
                         setsReps: "3 x 10-12", 
                         desc: "Tira de la barra hacia el pecho, enfocándote en llevar los codos hacia atrás para contraer la espalda (ancho).", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=JALÓN+PECHO" 
+                        techDetails: "Polea: **Desde Arriba**. Agarre: Barra ancha (supino, prono o neutro). Clave: Inclinar ligeramente el torso hacia atrás. Liderar el movimiento con los codos.",
+                        image_url: getStaticImageUrl("Jalón Pecho + Espalda", '9333ea') 
                     },
                     { 
                         name: "Remo en Máquina o Polea Baja", 
                         setsReps: "3 x 10-12", 
                         desc: "Tira hacia tu abdomen manteniendo la espalda recta y saca pecho. Trabaja el grosor de la espalda.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=REMO+POLEA" 
+                        techDetails: "Polea: **Desde Abajo**. Agarre: V-bar o manillar neutro. Clave: Mantener el torso vertical y estable. Retraer las escápulas al tirar (juntar los omóplatos).",
+                        image_url: getStaticImageUrl("Remo + Espalda", '9333ea') 
                     },
                     { 
                         name: "Flexión de Bíceps con Barra EZ", 
                         setsReps: "3 x 10", 
                         desc: "Flexiona los brazos sin mover los codos, aislando el bíceps. Evita el impulso del cuerpo.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CURL+EZ" 
+                        techDetails: "Posición: De pie, codos pegados al torso. Clave: Iniciar el movimiento con la barra completamente extendida y controlar la bajada. Usar la barra EZ para menor tensión en las muñecas.",
+                        image_url: getStaticImageUrl("Curl Bíceps", 'f87171') 
                     },
                     { 
                         name: "Pájaro (Elevación Posterior)", 
                         setsReps: "3 x 15", 
                         desc: "Inclínate (casi paralelo al suelo) y eleva las mancuernas hacia los lados para trabajar la parte posterior del hombro.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PÁJARO+POSTERIOR" 
+                        techDetails: "Posición: De pie inclinado o sentado en banco. Clave: Movimiento lento y controlado. El codo debe estar ligeramente flexionado y el movimiento termina a la altura del hombro, no más alto.",
+                        image_url: getStaticImageUrl("Pájaro + Deltoides", '6366f1') 
                     },
                     { 
                         name: "Plancha (Plank)", 
                         setsReps: "3 x 45-60 seg", 
                         desc: "Mantén el cuerpo recto como una tabla, contrayendo fuertemente el abdomen y glúteos (Core).", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PLANK" 
+                        techDetails: "Posición: Apoyado en antebrazos y puntas de los pies. Clave: No arquear la espalda baja (mantener el abdomen apretado). Hombros, cadera y talones deben formar una línea recta.",
+                        image_url: getStaticImageUrl("Plancha + Core", '0ea5e9') 
                     }
                 ]
             },
@@ -190,37 +233,43 @@
                         name: "Calentamiento (Cardio y Movilidad)", 
                         setsReps: "1 x 5 min", 
                         desc: "5 minutos de cardio suave y estiramiento dinámico de piernas.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                        techDetails: "Objetivo: Aumentar el flujo sanguíneo a las piernas. Técnica: Balanceos de pierna, círculos de tobillo y estocadas ligeras sin peso.",
+                        image_url: getStaticImageUrl("Calentamiento", 'f97316') 
                     },
                     { 
                         name: "Sentadilla en Multipower o Hack", 
                         setsReps: "3 x 10", 
                         desc: "Utiliza la máquina para estabilizar el movimiento y enfocarte en bajar hasta que el muslo esté paralelo al suelo.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=SENTADILLA+HACK" 
+                        techDetails: "Máquina: Hack Squat o Multipower. Clave: Mantener el pecho arriba y las rodillas alineadas con las puntas de los pies. Profundidad es clave.",
+                        image_url: getStaticImageUrl("Sentadilla + Pierna", '10b981') 
                     },
                     { 
                         name: "Curl Femoral (Tumbado o Sentado)", 
                         setsReps: "3 x 12-15", 
                         desc: "Flexiona la pierna hacia el glúteo para aislar los isquiotibiales (parte trasera del muslo).", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CURL+FEMORAL" 
+                        techDetails: "Máquina: Rodillo en tobillos. Clave: Asegurar que la cadera no se levante del asiento/banco. Buscar una contracción máxima al flexionar las rodillas.",
+                        image_url: getStaticImageUrl("Curl Femoral + Isquio", 'f43f5e') 
                     },
                     { 
                         name: "Zancadas Estáticas con Mancuernas", 
                         setsReps: "3 x 10-12 (por pierna)", 
                         desc: "Mantente estático en posición de zancada, bajando y subiendo. Mantiene la rodilla de adelante alineada con el tobillo.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=ZANCADAS" 
+                        techDetails: "Posición: De pie con un pie adelante, mancuernas a los lados. Clave: Bajar el cuerpo verticalmente. La rodilla trasera casi toca el suelo.",
+                        image_url: getStaticImageUrl("Zancadas + Glúteo", '84cc16') 
                     },
                     { 
                         name: "Elevación de Gemelos (Máquina)", 
                         setsReps: "3 x 15-20", 
                         desc: "Baja completamente los talones y sube todo lo posible, concentrándose en el rango de movimiento.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=GEMELOS+MÁQUINA" 
+                        techDetails: "Máquina: Prensa o máquina de gemelos. Clave: Usar el rango completo de movimiento. Mantener la contracción en la parte alta del recorrido por un segundo.",
+                        image_url: getStaticImageUrl("Elevación Gemelos", 'a855f7') 
                     },
                     { 
                         name: "Elevación de Glúteos en el Suelo (Glute Bridge)", 
                         setsReps: "3 x 12-15", 
                         desc: "Acuéstate boca arriba, rodillas flexionadas. Empuja la cadera hacia el techo contrayendo los glúteos. Puedes añadir una mancuerna sobre la cadera para más intensidad.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=GLUTE+BRIDGE" 
+                        techDetails: "Posición: Boca arriba, pies apoyados. Clave: Contraer los glúteos con fuerza en la cima. No hiperextender la espalda baja al subir.",
+                        image_url: getStaticImageUrl("Glute Bridge + Glúteo", '84cc16') 
                     }
                 ]
             },
@@ -231,37 +280,43 @@
                         name: "Calentamiento (Cardio y Movilidad)", 
                         setsReps: "1 x 5 min", 
                         desc: "5 minutos de cardio suave y movimientos circulares de hombros.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                        techDetails: "Objetivo: Acondicionamiento general. Técnica: Estiramientos dinámicos ligeros y calentamiento específico para hombros.",
+                        image_url: getStaticImageUrl("Calentamiento", 'f97316') 
                     },
                     { 
                         name: "Press Inclinado (Mancuernas)", 
                         setsReps: "3 x 8-10", 
                         desc: "Acuéstate en el banco inclinado y empuja las mancuernas, dando énfasis a la parte superior del pecho.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRESS+INCLINADO" 
+                        techDetails: "Posición: Banco inclinado (30-45°). Clave: Mismo control que el press plano. La mancuerna debe descender lentamente hacia los hombros.",
+                        image_url: getStaticImageUrl("Press Inclinado + Pecho", '3b82f6') 
                     },
                     { 
                         name: "Remo con Barra (Agarre Supino)", 
                         setsReps: "3 x 10", 
                         desc: "Tira la barra hacia el abdomen con el agarre de palma hacia arriba. Fortalece la espalda baja/media.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=REMO+BARRA+SUPINO" 
+                        techDetails: "Posición: Inclinación del torso a 45° o más, espalda recta. Agarre: Supino (palmas hacia arriba), a la altura de los hombros. Clave: Llevar la barra hacia el ombligo, sintiendo la espalda.",
+                        image_url: getStaticImageUrl("Remo Barra + Espalda", '9333ea') 
                     },
                     { 
                         name: "Elevaciones Laterales (Mancuernas)", 
                         setsReps: "3 x 12-15", 
                         desc: "Levanta las mancuernas hacia los lados, manteniendo los brazos casi rectos. Para los hombros laterales. Peso ligero.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=ELEV.+LATERALES" 
+                        techDetails: "Posición: De pie. Clave: Elevar las mancuernas hasta la altura del hombro, no más alto. Los codos deben estar ligeramente doblados. Usar peso ligero para asegurar la técnica.",
+                        image_url: getStaticImageUrl("Elevaciones Laterales", '6366f1') 
                     },
                     { 
                         name: "Face Pull (Tirón a la Cara)", 
                         setsReps: "3 x 15", 
                         desc: "Tira de una cuerda hacia tu cara en la polea. Fortalece el manguito rotador y mejora la postura.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=FACE+PULL" 
+                        techDetails: "Polea: **Desde Arriba**. Agarre: Cuerda, palmas mirando hacia abajo. Clave: Llevar la cuerda hacia la frente/nariz. Enfocarse en rotar los hombros hacia atrás al final del movimiento.",
+                        image_url: getStaticImageUrl("Face Pull + Hombro", '6366f1') 
                     },
                     { 
                         name: "Superserie Bíceps/Tríceps", 
                         setsReps: "3 x 10 / 12", 
                         desc: "Realiza Curl Martillo (bíceps) inmediatamente seguido de Fondos en Banco (tríceps). Descansa solo al terminar ambos.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=SUPERSERIE+BRAZOS" 
+                        techDetails: "Curl Martillo: Agarre neutro. Fondos: Manos separadas a la anchura de los hombros en un banco. Clave: Evitar el dolor de hombros en los fondos; el torso debe bajar cerca del banco.",
+                        image_url: getStaticImageUrl("Bíceps/Tríceps", 'f87171') 
                     }
                 ]
             },
@@ -272,61 +327,121 @@
                         name: "Calentamiento (Cardio)", 
                         setsReps: "1 x 5 min", 
                         desc: "5 minutos de cardio para preparar el cuerpo para el entrenamiento de alta intensidad.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                        techDetails: "Objetivo: Preparación aeróbica. Técnica: Aumentar la intensidad progresivamente en la máquina cardio elegida.",
+                        image_url: getStaticImageUrl("Calentamiento", 'f97316') 
                     },
                     { 
                         name: "Peso Muerto Rumano (Mancuernas)", 
                         setsReps: "3 x 10-12", 
                         desc: "Mantén las rodillas semi-flexionadas y baja las mancuernas deslizando la cadera hacia atrás. Estira femorales y glúteos.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PESO+MUERTO+RUM." 
+                        techDetails: "Posición: De pie, mancuernas. Clave: El movimiento es una bisagra de cadera (empujar la cadera hacia atrás). Mantener la espalda recta y las mancuernas pegadas a las piernas.",
+                        image_url: getStaticImageUrl("Peso Muerto + Isquio", 'f43f5e') 
                     },
                     { 
                         name: "Abdominales en Cable (Polea Alta)", 
                         setsReps: "3 x 15-20", 
                         desc: "Arrodíllate frente a la polea y flexiona el torso hacia el suelo, concentrándote en el abdomen.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CRUNCH+CABLE" 
+                        techDetails: "Polea: **Desde Arriba**. Agarre: Cuerda en la parte alta. Clave: El movimiento es una flexión de columna, no tirar con los brazos. Buscar 'enroscar' el torso hacia el suelo.",
+                        image_url: getStaticImageUrl("Abdominales Cable + Core", '0ea5e9') 
                     },
                     { 
                         name: "Extensión de Tríceps por Encima de la Cabeza", 
                         setsReps: "3 x 12", 
                         desc: "Sujeta una mancuerna o barra con ambas manos y bájala detrás de la cabeza, estirando el tríceps.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=EXT.+TRÍCEPS+CABEZA" 
+                        techDetails: "Posición: Sentado o de pie. Clave: Mantener los codos cerca de la cabeza y apuntando al techo. Sentir el estiramiento en el tríceps en la fase de bajada.",
+                        image_url: getStaticImageUrl("Extensión Tríceps", 'ef4444') 
                     },
                     { 
                         name: "Máquina de Abducción de Cadera", 
                         setsReps: "3 x 15-20", 
                         desc: "Empuja las piernas hacia afuera, trabajando la parte lateral de los glúteos.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=ABDUCCIÓN+CADERA" 
+                        techDetails: "Máquina: Asiento con almohadillas en las rodillas. Clave: Sentarse recto. Empujar las rodillas hacia afuera con un movimiento controlado y lento, sintiendo la parte lateral del glúteo.",
+                        image_url: getStaticImageUrl("Abducción Cadera + Glúteo", '84cc16') 
                     },
                     { 
                         name: "Cardio de Alta Intensidad (HIIT)", 
                         setsReps: "8 x 1 min", 
                         desc: "Alterna 30 segundos de sprint (máximo esfuerzo) con 30 segundos de caminata rápida en la cinta (recuperación). Total: 8 minutos.", 
-                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CARDIO+HIIT" 
+                        techDetails: "Técnica: Esfuerzo máximo durante el sprint. El ritmo de recuperación debe permitirte hablar en frases cortas. Objetivo: Mejorar la capacidad cardiovascular.",
+                        image_url: getStaticImageUrl("Cardio HIIT", 'f97316') 
+                    }
+                ]
+            },
+            "CASA": {
+                focus: "Cuerpo Completo (Sin Material)",
+                exercises: [
+                    { 
+                        name: "Calentamiento y Movilidad", 
+                        setsReps: "1 x 5 min", 
+                        desc: "Movilidad de hombros, caderas y tobillos. Calentamiento con jumping jacks o rodillas altas.", 
+                        techDetails: "Objetivo: Aumento de ritmo cardíaco y preparación articular. Técnica: 30 segundos de rodillas arriba, 30 segundos de círculos de brazos. Repetir 5 veces.",
+                        image_url: getStaticImageUrl("Calentamiento Casa", 'f97316') 
+                    },
+                    { 
+                        name: "Sentadilla Corporal (Air Squat)", 
+                        setsReps: "3 x 15-20", 
+                        desc: "Desciende como si te fueras a sentar, manteniendo el pecho erguido. El peso corporal es la resistencia.", 
+                        techDetails: "Posición: Pies a la altura de los hombros. Clave: Empujar las rodillas hacia afuera. La cadera baja hasta al menos el paralelo. Los brazos sirven de contrapeso al frente.",
+                        image_url: getStaticImageUrl("Sentadilla", '10b981') 
+                    },
+                    { 
+                        name: "Flexiones (Push-ups)", 
+                        setsReps: "3 x 8-12", 
+                        desc: "Acuéstate boca abajo y empuja el suelo. Si es muy difícil, hazlas apoyando las rodillas.", 
+                        techDetails: "Posición: Manos a la altura del pecho. Clave: Mantener el cuerpo en línea recta (cadera no cuelga ni sube). Los codos se flexionan hacia atrás en un ángulo de 45° con el torso.",
+                        image_url: getStaticImageUrl("Flexiones", '3b82f6') 
+                    },
+                    { 
+                        name: "Zancadas de Peso Corporal (Walking Lunges)", 
+                        setsReps: "3 x 10-12 (por pierna)", 
+                        desc: "Da un paso al frente y baja la rodilla trasera hacia el suelo. Trabaja piernas y glúteos de forma unilateral.", 
+                        techDetails: "Posición: De pie. Clave: Bajar la cadera de forma vertical. La rodilla delantera debe estar alineada con el tobillo. Empujar con el talón de la pierna delantera al subir.",
+                        image_url: getStaticImageUrl("Zancadas Casa", '84cc16') 
+                    },
+                    { 
+                        name: "Fondos en Silla (Tríceps Dips)", 
+                        setsReps: "3 x 10-15", 
+                        desc: "Utiliza una silla o borde estable. Baja el cuerpo manteniendo la espalda cerca del soporte.", 
+                        techDetails: "Material: Silla o banco estable. Clave: Mantener los codos apuntando hacia atrás, no hacia los lados. Evitar bajar en exceso para no forzar el hombro.",
+                        image_url: getStaticImageUrl("Fondos Tríceps", 'ef4444') 
+                    },
+                    { 
+                        name: "Remo Invertido en Sábana/Toalla (Alternativa a Tirón)", 
+                        setsReps: "3 x 10-12", 
+                        desc: "Acuéstate debajo de una puerta y sujeta firmemente una sábana atada al pomo, tirando de tu cuerpo hacia arriba. Útil si tienes una barra, pero se puede improvisar.", 
+                        techDetails: "Alternativa: Si no puedes hacer el 'remo en sábana', haz **Superman** (acostado boca abajo, levanta brazos y piernas a la vez). Clave: Concentrar la fuerza en la espalda al tirar/levantar.",
+                        image_url: getStaticImageUrl("Remo Invertido", '9333ea') 
+                    },
+                    { 
+                        name: "Crunch Abdominal y Plancha", 
+                        setsReps: "3 x 20 / 45 seg", 
+                        desc: "Alterna 20 repeticiones de crunch (acostado, levanta el torso) seguido de 45 segundos de plancha.", 
+                        techDetails: "Crunch: El cuello no tira, el movimiento es desde el abdomen. Plancha: Cuerpo recto como tabla, omóplatos apretados, sin arquear la espalda baja.",
+                        image_url: getStaticImageUrl("Abdomen Casa", '0ea5e9') 
                     }
                 ]
             }
         };
 
         const dayNames = { 1: "LUNES", 2: "MARTES", 3: "MIÉRCOLES", 4: "JUEVES", 5: "VIERNES" };
-        const weekDays = ["LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES"];
+        const weekDays = ["LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "CASA"]; // Se añade CASA
 
         const listContainer = document.getElementById('exercise-list-container');
         const titleElement = document.getElementById('current-day-title');
         const focusElement = document.getElementById('day-focus');
         const daySelectorContainer = document.getElementById('day-selector-container');
         
-        let completedExercises = {};
+        let completedExercises = {}; 
 
-        // Get the modal and image elements
         const modal = document.getElementById("myModal");
         const modalImg = document.getElementById("img01");
 
+        // Función para abrir el modal
         function openModal(imgSrc) {
             modal.style.display = "flex";
             modalImg.src = imgSrc;
         }
-        
+
         // Función para renderizar el día seleccionado
         function renderRoutine(dayKey) {
             const dayData = routine[dayKey];
@@ -344,31 +459,33 @@
             dayData.exercises.forEach((ex, index) => {
                 const exerciseId = `${dayKey}-${index}`;
                 const isCompleted = completedExercises[exerciseId];
-                const imageUrl = ex.static_image_url;
 
                 const exerciseDiv = document.createElement('div');
-                exerciseDiv.className = 'p-5 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-indigo-50 transition duration-150';
+                exerciseDiv.className = 'exercise-item p-5 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-indigo-50 transition duration-150';
                 
-                // HTML para la imagen estática
+                // Imagen estática y cliqueable
                 const imageHtml = `
-                    <div id="img-container-${exerciseId}" class="w-24 h-24 flex items-center justify-center rounded-md bg-gray-200 shrink-0">
+                    <div class="w-24 h-24 flex items-center justify-center rounded-md shrink-0">
                         <img 
-                            src="${imageUrl}" 
+                            src="${ex.image_url}" 
                             alt="Ilustración del ejercicio: ${ex.name}" 
                             class="w-full h-full object-cover rounded-md cursor-pointer shadow-sm border border-indigo-400" 
-                            onclick="openModal('${imageUrl}')"
+                            onclick="openModal('${ex.image_url}')"
                         >
                     </div>
                 `;
 
                 exerciseDiv.innerHTML = `
-                    <div class="mb-3 md:mb-0 md:w-3/5">
+                    <div class="exercise-details mb-3 md:mb-0 md:w-3/5">
                         <h3 class="text-lg font-semibold text-gray-900">${index + 1}. ${ex.name}</h3>
                         <p class="text-sm text-gray-500 mt-1">${ex.desc}</p>
+                        <p class="text-xs text-gray-700 font-medium mt-2 bg-gray-100 p-2 rounded-md shadow-inner border border-gray-200">
+                            <strong class="text-indigo-600">Detalles Técnicos:</strong> ${ex.techDetails}
+                        </p>
                     </div>
-                    <div class="flex flex-col items-center gap-4 md:w-2/5 md:justify-end">
+                    <div class="exercise-actions flex flex-col items-center gap-4 md:flex-row md:w-2/5 md:justify-end">
                         ${imageHtml}
-                        <span class="text-sm font-medium text-indigo-600 w-24 text-center">${ex.setsReps}</span>
+                        <span class="text-sm font-medium text-indigo-600 w-24 text-center order-first md:order-none">${ex.setsReps}</span>
                         <button 
                             data-exercise-id="${exerciseId}"
                             class="complete-button py-2 px-4 rounded-full text-sm font-bold shadow-md w-32 
@@ -402,7 +519,11 @@
                 button.textContent = day;
                 button.className = 'day-selector-btn py-2 px-4 rounded-lg text-sm font-semibold transition duration-150';
                 button.setAttribute('data-day', day);
-                button.onclick = () => renderRoutine(day);
+                button.onclick = () => {
+                    // Limpiar el estado de completado al cambiar de día, simulando una nueva sesión
+                    completedExercises = {}; 
+                    renderRoutine(day);
+                };
                 daySelectorContainer.appendChild(button);
             });
         }
@@ -440,6 +561,7 @@
             if (weekDays.includes(today)) {
                 renderRoutine(today);
             } else {
+                // Si es fin de semana o un día no mapeado, por defecto va a LUNES
                 renderRoutine("LUNES"); 
             }
         });
