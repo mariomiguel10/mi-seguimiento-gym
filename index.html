@@ -273,12 +273,19 @@
                     >
                 `;
             } else {
+                // FALLBACK ROBUSTO: Muestra un placeholder cliqueable si la generación de imagen falla
+                const fallbackUrl = 'https://placehold.co/96x96/4f46e5/ffffff?text=ILUSTRACION';
+
                 imgContainer.innerHTML = `
-                    <div class="text-xs text-red-500 text-center p-2">
-                        No disponible
-                    </div>
+                    <img 
+                        src="${fallbackUrl}" 
+                        alt="Ilustración no disponible, haz click para detalles" 
+                        class="w-full h-full object-cover rounded-md cursor-pointer shadow-sm border border-indigo-400" 
+                        onclick="openModal('${fallbackUrl}')"
+                    >
                 `;
-                imgContainer.classList.add('bg-red-100', 'border', 'border-red-300');
+                // El fallback ya es funcional y estético, no necesita el estilo de error
+                imgContainer.classList.remove('bg-red-100', 'border', 'border-red-300');
             }
         }
 
