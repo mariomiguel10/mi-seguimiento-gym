@@ -60,19 +60,6 @@
             text-decoration: none;
             cursor: pointer;
         }
-        /* Estilo para el spinner de carga */
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #4f46e5; /* Color índigo */
-            animation: spin 1s ease infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen p-4 sm:p-8">
@@ -117,56 +104,206 @@
             "LUNES": {
                 focus: "Empuje Superior y Pierna",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave (cinta/elíptica) y movimientos articulares para preparar músculos y articulaciones.", image_prompt: "mujer en un gimnasio haciendo calentamiento cardiovascular ligero en una cinta, enfoque en el ejercicio, estilo fotografía de stock, render 3D de alta calidad" },
-                    { name: "Prensa de Piernas", setsReps: "3 x 10-12", desc: "Empuja la plataforma con fuerza, enfocándote en la contracción de cuádriceps y glúteos. Controla el peso al bajar.", image_prompt: "persona haciendo prensa de piernas en máquina de gimnasio, vista lateral, movimiento de la máquina de pesas, fotografía de stock" },
-                    { name: "Press de Banca con Mancuernas", setsReps: "3 x 8-10", desc: "Acuéstate en el banco y empuja las mancuernas hacia arriba, buscando un rango de movimiento profundo para trabajar el pecho.", image_prompt: "hombre haciendo press de banca con mancuernas en un banco plano, vista frontal, ejercicio de fuerza, fotografía de stock" },
-                    { name: "Extensión de Cuádriceps (Máquina)", setsReps: "3 x 12-15", desc: "Siéntate y extiende las piernas, aislando el músculo cuádriceps en la parte delantera.", image_prompt: "persona haciendo extensión de cuádriceps en máquina de gimnasio, aislado, fotografía de stock" },
-                    { name: "Press Militar con Mancuernas (Sentado)", setsReps: "3 x 10", desc: "Sube las mancuernas por encima de la cabeza de manera controlada. Excelente para hombros (deltoides).", image_prompt: "persona haciendo press militar sentado con mancuernas, vista de 3/4 en un banco de gimnasio, estilo fotografía de stock" },
-                    { name: "Extensiones de Tríceps (Polea Alta)", setsReps: "3 x 12-15", desc: "Empuja la barra hacia abajo, sintiendo la contracción del tríceps al final del movimiento.", image_prompt: "persona haciendo extensión de tríceps en polea alta con barra, vista de 3/4, enfoque en la técnica, render 3D" }
+                    { 
+                        name: "Calentamiento (Cardio y Movilidad)", 
+                        setsReps: "1 x 5 min", 
+                        desc: "5 minutos de cardio suave (cinta/elíptica) y movimientos articulares para preparar músculos y articulaciones.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                    },
+                    { 
+                        name: "Prensa de Piernas", 
+                        setsReps: "3 x 10-12", 
+                        desc: "Empuja la plataforma con fuerza, enfocándote en la contracción de cuádriceps y glúteos. Controla el peso al bajar.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRENSA+PIERNAS" 
+                    },
+                    { 
+                        name: "Press de Banca con Mancuernas", 
+                        setsReps: "3 x 8-10", 
+                        desc: "Acuéstate en el banco y empuja las mancuernas hacia arriba, buscando un rango de movimiento profundo para trabajar el pecho.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRESS+BANCA+MANC." 
+                    },
+                    { 
+                        name: "Extensión de Cuádriceps (Máquina)", 
+                        setsReps: "3 x 12-15", 
+                        desc: "Siéntate y extiende las piernas, aislando el músculo cuádriceps en la parte delantera.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=EXT.+CUÁDRICEPS" 
+                    },
+                    { 
+                        name: "Press Militar con Mancuernas (Sentado)", 
+                        setsReps: "3 x 10", 
+                        desc: "Sube las mancuernas por encima de la cabeza de manera controlada. Excelente para hombros (deltoides).", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRESS+MILITAR" 
+                    },
+                    { 
+                        name: "Extensiones de Tríceps (Polea Alta)", 
+                        setsReps: "3 x 12-15", 
+                        desc: "Empuja la barra hacia abajo, sintiendo la contracción del tríceps al final del movimiento.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=EXT.+TRÍCEPS+POLEA" 
+                    }
                 ]
             },
             "MARTES": {
                 focus: "Tirón Superior y Abdomen",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movilidad de hombros y espalda.", image_prompt: "mujer haciendo calentamiento general, estiramientos de hombros y espalda en un gimnasio, fotografía de stock" },
-                    { name: "Jalón al Pecho (Polea Alta)", setsReps: "3 x 10-12", desc: "Tira de la barra hacia el pecho, enfocándote en llevar los codos hacia atrás para contraer la espalda (ancho).", image_prompt: "hombre haciendo jalón al pecho en máquina de polea alta en un gimnasio, concentrado, render 3D de alta calidad" },
-                    { name: "Remo en Máquina o Polea Baja", setsReps: "3 x 10-12", desc: "Tira hacia tu abdomen manteniendo la espalda recta y saca pecho. Trabaja el grosor de la espalda.", image_prompt: "persona haciendo remo sentado en máquina de polea baja, vista lateral, enfoque en la contracción de espalda, fotografía de stock" },
-                    { name: "Flexión de Bíceps con Barra EZ", setsReps: "3 x 10", desc: "Flexiona los brazos sin mover los codos, aislando el bíceps. Evita el impulso del cuerpo.", image_prompt: "hombre haciendo curl de bíceps con barra EZ, de pie, en primer plano, fotografía de stock" },
-                    { name: "Pájaro (Elevación Posterior)", setsReps: "3 x 15", desc: "Inclínate (casi paralelo al suelo) y eleva las mancuernas hacia los lados para trabajar la parte posterior del hombro.", image_prompt: "mujer haciendo elevaciones posteriores (pájaro) con mancuernas, inclinada hacia adelante, vista lateral, fotografía de stock" },
-                    { name: "Plancha (Plank)", setsReps: "3 x 45-60 seg", desc: "Mantén el cuerpo recto como una tabla, contrayendo fuertemente el abdomen y glúteos (Core).", image_prompt: "persona haciendo plancha (plank) correctamente, vista lateral, sobre una colchoneta, render 3D" }
+                    { 
+                        name: "Calentamiento (Cardio y Movilidad)", 
+                        setsReps: "1 x 5 min", 
+                        desc: "5 minutos de cardio suave y movilidad de hombros y espalda.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                    },
+                    { 
+                        name: "Jalón al Pecho (Polea Alta)", 
+                        setsReps: "3 x 10-12", 
+                        desc: "Tira de la barra hacia el pecho, enfocándote en llevar los codos hacia atrás para contraer la espalda (ancho).", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=JALÓN+PECHO" 
+                    },
+                    { 
+                        name: "Remo en Máquina o Polea Baja", 
+                        setsReps: "3 x 10-12", 
+                        desc: "Tira hacia tu abdomen manteniendo la espalda recta y saca pecho. Trabaja el grosor de la espalda.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=REMO+POLEA" 
+                    },
+                    { 
+                        name: "Flexión de Bíceps con Barra EZ", 
+                        setsReps: "3 x 10", 
+                        desc: "Flexiona los brazos sin mover los codos, aislando el bíceps. Evita el impulso del cuerpo.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CURL+EZ" 
+                    },
+                    { 
+                        name: "Pájaro (Elevación Posterior)", 
+                        setsReps: "3 x 15", 
+                        desc: "Inclínate (casi paralelo al suelo) y eleva las mancuernas hacia los lados para trabajar la parte posterior del hombro.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PÁJARO+POSTERIOR" 
+                    },
+                    { 
+                        name: "Plancha (Plank)", 
+                        setsReps: "3 x 45-60 seg", 
+                        desc: "Mantén el cuerpo recto como una tabla, contrayendo fuertemente el abdomen y glúteos (Core).", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PLANK" 
+                    }
                 ]
             },
             "MIÉRCOLES": {
                 focus: "Pierna Completa",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y estiramiento dinámico de piernas.", image_prompt: "mujer haciendo calentamiento con estiramientos dinámicos de piernas en el gimnasio, estilo fotografía de stock" },
-                    { name: "Sentadilla en Multipower o Hack", setsReps: "3 x 10", desc: "Utiliza la máquina para estabilizar el movimiento y enfocarte en bajar hasta que el muslo esté paralelo al suelo.", image_prompt: "persona haciendo sentadilla en máquina multipower o hack squat en un gimnasio, vista lateral, estilo de entrenamiento de fuerza" },
-                    { name: "Curl Femoral (Tumbado o Sentado)", setsReps: "3 x 12-15", desc: "Flexiona la pierna hacia el glúteo para aislar los isquiotibiales (parte trasera del muslo).", image_prompt: "persona haciendo curl femoral en máquina, tumbada boca abajo, enfoque en las piernas, fotografía de stock" },
-                    { name: "Zancadas Estáticas con Mancuernas", setsReps: "3 x 10-12 (por pierna)", desc: "Mantente estático en posición de zancada, bajando y subiendo. Mantiene la rodilla de adelante alineada con el tobillo.", image_prompt: "mujer haciendo zancadas estáticas con mancuernas, vista lateral, buena forma, fotografía de stock" },
-                    { name: "Elevación de Gemelos (Máquina)", setsReps: "3 x 15-20", desc: "Baja completamente los talones y sube todo lo posible, concentrándose en el rango de movimiento.", image_prompt: "persona haciendo elevación de gemelos en máquina de gimnasio, de pie, con peso en los hombros, render 3D" },
-                    { name: "Elevación de Glúteos en el Suelo (Glute Bridge)", setsReps: "3 x 12-15", desc: "Acuéstate boca arriba, rodillas flexionadas. Empuja la cadera hacia el techo contrayendo los glúteos. Puedes añadir una mancuerna sobre la cadera para más intensidad.", image_prompt: "persona haciendo elevación de glúteos en el suelo (glute bridge) con una mancuerna sobre la cadera, vista lateral, render 3D, fondo de gimnasio" }
+                    { 
+                        name: "Calentamiento (Cardio y Movilidad)", 
+                        setsReps: "1 x 5 min", 
+                        desc: "5 minutos de cardio suave y estiramiento dinámico de piernas.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                    },
+                    { 
+                        name: "Sentadilla en Multipower o Hack", 
+                        setsReps: "3 x 10", 
+                        desc: "Utiliza la máquina para estabilizar el movimiento y enfocarte en bajar hasta que el muslo esté paralelo al suelo.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=SENTADILLA+HACK" 
+                    },
+                    { 
+                        name: "Curl Femoral (Tumbado o Sentado)", 
+                        setsReps: "3 x 12-15", 
+                        desc: "Flexiona la pierna hacia el glúteo para aislar los isquiotibiales (parte trasera del muslo).", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CURL+FEMORAL" 
+                    },
+                    { 
+                        name: "Zancadas Estáticas con Mancuernas", 
+                        setsReps: "3 x 10-12 (por pierna)", 
+                        desc: "Mantente estático en posición de zancada, bajando y subiendo. Mantiene la rodilla de adelante alineada con el tobillo.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=ZANCADAS" 
+                    },
+                    { 
+                        name: "Elevación de Gemelos (Máquina)", 
+                        setsReps: "3 x 15-20", 
+                        desc: "Baja completamente los talones y sube todo lo posible, concentrándose en el rango de movimiento.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=GEMELOS+MÁQUINA" 
+                    },
+                    { 
+                        name: "Elevación de Glúteos en el Suelo (Glute Bridge)", 
+                        setsReps: "3 x 12-15", 
+                        desc: "Acuéstate boca arriba, rodillas flexionadas. Empuja la cadera hacia el techo contrayendo los glúteos. Puedes añadir una mancuerna sobre la cadera para más intensidad.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=GLUTE+BRIDGE" 
+                    }
                 ]
             },
             "JUEVES": {
                 focus: "Empuje y Tirón General",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movimientos circulares de hombros.", image_prompt: "hombre haciendo calentamiento con círculos de hombros y estiramientos ligeros en el gimnasio, fotografía de stock" },
-                    { name: "Press Inclinado (Mancuernas)", setsReps: "3 x 8-10", desc: "Acuéstate en el banco inclinado y empuja las mancuernas, dando énfasis a la parte superior del pecho.", image_prompt: "persona haciendo press inclinado con mancuernas en banco inclinado, vista frontal, ejercicio de pecho, render 3D" },
-                    { name: "Remo con Barra (Agarre Supino)", setsReps: "3 x 10", desc: "Tira la barra hacia el abdomen con el agarre de palma hacia arriba. Fortalece la espalda baja/media.", image_prompt: "persona haciendo remo con barra (agarre supino), inclinada hacia adelante, enfoque en la espalda, fotografía de stock" },
-                    { name: "Elevaciones Laterales (Mancuernas)", setsReps: "3 x 12-15", desc: "Levanta las mancuernas hacia los lados, manteniendo los brazos casi rectos. Para los hombros laterales. Peso ligero.", image_prompt: "mujer haciendo elevaciones laterales con mancuernas, de pie, vista lateral, fotografía de stock" },
-                    { name: "Face Pull (Tirón a la Cara)", setsReps: "3 x 15", desc: "Tira de una cuerda hacia tu cara en la polea. Fortalece el manguito rotador y mejora la postura.", image_prompt: "persona haciendo face pull (tirón a la cara) en polea con cuerda, enfoque en la cara y los hombros, render 3D" },
-                    { name: "Superserie Bíceps/Tríceps", setsReps: "3 x 10 / 12", desc: "Realiza Curl Martillo (bíceps) inmediatamente seguido de Fondos en Banco (tríceps). Descansa solo al terminar ambos.", image_prompt: "hombre haciendo curl martillo de bíceps y fondos en banco para tríceps como superserie, ilustración de ejercicios" }
+                    { 
+                        name: "Calentamiento (Cardio y Movilidad)", 
+                        setsReps: "1 x 5 min", 
+                        desc: "5 minutos de cardio suave y movimientos circulares de hombros.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                    },
+                    { 
+                        name: "Press Inclinado (Mancuernas)", 
+                        setsReps: "3 x 8-10", 
+                        desc: "Acuéstate en el banco inclinado y empuja las mancuernas, dando énfasis a la parte superior del pecho.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PRESS+INCLINADO" 
+                    },
+                    { 
+                        name: "Remo con Barra (Agarre Supino)", 
+                        setsReps: "3 x 10", 
+                        desc: "Tira la barra hacia el abdomen con el agarre de palma hacia arriba. Fortalece la espalda baja/media.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=REMO+BARRA+SUPINO" 
+                    },
+                    { 
+                        name: "Elevaciones Laterales (Mancuernas)", 
+                        setsReps: "3 x 12-15", 
+                        desc: "Levanta las mancuernas hacia los lados, manteniendo los brazos casi rectos. Para los hombros laterales. Peso ligero.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=ELEV.+LATERALES" 
+                    },
+                    { 
+                        name: "Face Pull (Tirón a la Cara)", 
+                        setsReps: "3 x 15", 
+                        desc: "Tira de una cuerda hacia tu cara en la polea. Fortalece el manguito rotador y mejora la postura.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=FACE+PULL" 
+                    },
+                    { 
+                        name: "Superserie Bíceps/Tríceps", 
+                        setsReps: "3 x 10 / 12", 
+                        desc: "Realiza Curl Martillo (bíceps) inmediatamente seguido de Fondos en Banco (tríceps). Descansa solo al terminar ambos.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=SUPERSERIE+BRAZOS" 
+                    }
                 ]
             },
             "VIERNES": {
                 focus: "Refuerzo y Cardio HIIT",
                 exercises: [
-                    { name: "Calentamiento (Cardio)", setsReps: "1 x 5 min", desc: "5 minutos de cardio para preparar el cuerpo para el entrenamiento de alta intensidad.", image_prompt: "persona haciendo calentamiento en bicicleta estática o elíptica en un gimnasio, fotografía de stock" },
-                    { name: "Peso Muerto Rumano (Mancuernas)", setsReps: "3 x 10-12", desc: "Mantén las rodillas semi-flexionadas y baja las mancuernas deslizando la cadera hacia atrás. Estira femorales y glúteos.", image_prompt: "mujer haciendo peso muerto rumano con mancuernas, vista lateral, enfoque en la forma y los isquiotibiales, fotografía de stock" },
-                    { name: "Abdominales en Cable (Polea Alta)", setsReps: "3 x 15-20", desc: "Arrodíllate frente a la polea y flexiona el torso hacia el suelo, concentrándote en el abdomen.", image_prompt: "persona haciendo abdominales en cable (crunch de rodillas con cable), enfoque en el core, render 3D" },
-                    { name: "Extensión de Tríceps por Encima de la Cabeza", setsReps: "3 x 12", desc: "Sujeta una mancuerna o barra con ambas manos y bájala detrás de la cabeza, estirando el tríceps.", image_prompt: "hombre haciendo extensión de tríceps por encima de la cabeza con una mancuerna, sentado en un banco, fotografía de stock" },
-                    { name: "Máquina de Abducción de Cadera", setsReps: "3 x 15-20", desc: "Empuja las piernas hacia afuera, trabajando la parte lateral de los glúteos.", image_prompt: "mujer haciendo abducción de cadera en máquina de gimnasio, vista lateral, concentrada, fotografía de stock" },
-                    { name: "Cardio de Alta Intensidad (HIIT)", setsReps: "8 x 1 min", desc: "Alterna 30 segundos de sprint (máximo esfuerzo) con 30 segundos de caminata rápida en la cinta (recuperación). Total: 8 minutos.", image_prompt: "persona haciendo sprint en una cinta de correr durante un entrenamiento HIIT, vista de primer plano en la acción, fotografía de stock" }
+                    { 
+                        name: "Calentamiento (Cardio)", 
+                        setsReps: "1 x 5 min", 
+                        desc: "5 minutos de cardio para preparar el cuerpo para el entrenamiento de alta intensidad.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CALENTAMIENTO" 
+                    },
+                    { 
+                        name: "Peso Muerto Rumano (Mancuernas)", 
+                        setsReps: "3 x 10-12", 
+                        desc: "Mantén las rodillas semi-flexionadas y baja las mancuernas deslizando la cadera hacia atrás. Estira femorales y glúteos.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=PESO+MUERTO+RUM." 
+                    },
+                    { 
+                        name: "Abdominales en Cable (Polea Alta)", 
+                        setsReps: "3 x 15-20", 
+                        desc: "Arrodíllate frente a la polea y flexiona el torso hacia el suelo, concentrándote en el abdomen.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CRUNCH+CABLE" 
+                    },
+                    { 
+                        name: "Extensión de Tríceps por Encima de la Cabeza", 
+                        setsReps: "3 x 12", 
+                        desc: "Sujeta una mancuerna o barra con ambas manos y bájala detrás de la cabeza, estirando el tríceps.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=EXT.+TRÍCEPS+CABEZA" 
+                    },
+                    { 
+                        name: "Máquina de Abducción de Cadera", 
+                        setsReps: "3 x 15-20", 
+                        desc: "Empuja las piernas hacia afuera, trabajando la parte lateral de los glúteos.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=ABDUCCIÓN+CADERA" 
+                    },
+                    { 
+                        name: "Cardio de Alta Intensidad (HIIT)", 
+                        setsReps: "8 x 1 min", 
+                        desc: "Alterna 30 segundos de sprint (máximo esfuerzo) con 30 segundos de caminata rápida en la cinta (recuperación). Total: 8 minutos.", 
+                        static_image_url: "https://placehold.co/96x96/6366f1/ffffff?text=CARDIO+HIIT" 
+                    }
                 ]
             }
         };
@@ -189,106 +326,7 @@
             modal.style.display = "flex";
             modalImg.src = imgSrc;
         }
-
-        // --- Funciones para la API de Generación de Imágenes y Backoff ---
-
-        const API_KEY = ""; // La clave se proporciona en el entorno de Canvas
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${API_KEY}`;
-
-        // Utilidad para manejar reintentos con backoff exponencial
-        async function fetchWithBackoff(url, options, maxRetries = 5) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.ok) {
-                        return response;
-                    }
-                    if (response.status === 429 || response.status >= 500) {
-                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        continue;
-                    }
-                    throw new Error(`Error en la API: ${response.statusText}`);
-                } catch (error) {
-                    if (i === maxRetries - 1) throw error;
-                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
-
-        async function generateImage(prompt) {
-            const payload = { 
-                instances: { 
-                    prompt: `Imagen de ejercicio de gimnasio: ${prompt}` 
-                }, 
-                parameters: { 
-                    "sampleCount": 1,
-                    "aspectRatio": "1:1" // Cuadrado para el thumbnail
-                } 
-            };
-            
-            try {
-                const response = await fetchWithBackoff(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-                
-                if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-                    const base64Data = result.predictions[0].bytesBase64Encoded;
-                    return `data:image/png;base64,${base64Data}`;
-                } else {
-                    console.error("Respuesta de la API incompleta:", result);
-                    return null; 
-                }
-            } catch (error) {
-                console.error("Error al generar la imagen para el prompt:", prompt, error);
-                return null;
-            }
-        }
         
-        // Función asíncrona para cargar la imagen y reemplazar el placeholder
-        async function loadAndDisplayImage(exerciseId, prompt) {
-            const imgContainer = document.getElementById(`img-container-${exerciseId}`);
-            if (!imgContainer) return;
-
-            // 1. Mostrar Spinner
-            imgContainer.innerHTML = '<div class="spinner"></div>';
-            
-            // 2. Generar Imagen
-            const imageUrl = await generateImage(prompt);
-            
-            // 3. Reemplazar
-            if (imageUrl) {
-                imgContainer.innerHTML = `
-                    <img 
-                        src="${imageUrl}" 
-                        alt="Ilustración del ejercicio" 
-                        class="w-full h-full object-cover rounded-md cursor-pointer shadow-sm" 
-                        onerror="this.onerror=null; this.src='https://placehold.co/96x96/f87171/ffffff?text=Error';"
-                        onclick="openModal('${imageUrl}')"
-                    >
-                `;
-            } else {
-                // FALLBACK ROBUSTO: Muestra un placeholder cliqueable si la generación de imagen falla
-                const fallbackUrl = 'https://placehold.co/96x96/4f46e5/ffffff?text=ILUSTRACION';
-
-                imgContainer.innerHTML = `
-                    <img 
-                        src="${fallbackUrl}" 
-                        alt="Ilustración no disponible, haz click para detalles" 
-                        class="w-full h-full object-cover rounded-md cursor-pointer shadow-sm border border-indigo-400" 
-                        onclick="openModal('${fallbackUrl}')"
-                    >
-                `;
-                // El fallback ya es funcional y estético, no necesita el estilo de error
-                imgContainer.classList.remove('bg-red-100', 'border', 'border-red-300');
-            }
-        }
-
         // Función para renderizar el día seleccionado
         function renderRoutine(dayKey) {
             const dayData = routine[dayKey];
@@ -306,14 +344,20 @@
             dayData.exercises.forEach((ex, index) => {
                 const exerciseId = `${dayKey}-${index}`;
                 const isCompleted = completedExercises[exerciseId];
+                const imageUrl = ex.static_image_url;
 
                 const exerciseDiv = document.createElement('div');
                 exerciseDiv.className = 'p-5 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-indigo-50 transition duration-150';
                 
-                // Placeholder para la imagen
+                // HTML para la imagen estática
                 const imageHtml = `
                     <div id="img-container-${exerciseId}" class="w-24 h-24 flex items-center justify-center rounded-md bg-gray-200 shrink-0">
-                        <div class="text-xs text-gray-500">Cargando...</div>
+                        <img 
+                            src="${imageUrl}" 
+                            alt="Ilustración del ejercicio: ${ex.name}" 
+                            class="w-full h-full object-cover rounded-md cursor-pointer shadow-sm border border-indigo-400" 
+                            onclick="openModal('${imageUrl}')"
+                        >
                     </div>
                 `;
 
@@ -337,11 +381,6 @@
                     </div>
                 `;
                 listContainer.appendChild(exerciseDiv);
-
-                // Llamada asíncrona para cargar la imagen después de que el elemento existe en el DOM
-                if (ex.image_prompt) {
-                    loadAndDisplayImage(exerciseId, ex.image_prompt);
-                }
             });
             updateDaySelector(dayKey);
         }
