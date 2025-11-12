@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguimiento de Rutina de Musculación</title>
-    <!-- Carga de Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Fuente Inter para estética */
         :root { font-family: 'Inter', sans-serif; }
@@ -18,35 +17,78 @@
             color: white;
             pointer-events: none; /* Deshabilitar clics una vez completado */
         }
+        /* Estilos para el modal de imagen */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .modal-content, #caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+        @keyframes zoom {
+            from {transform: scale(0.1)} 
+            to {transform: scale(1)}
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen p-4 sm:p-8">
 
     <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-6 sm:p-10">
-        <!-- Título y Selector de Día -->
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">Mi Rutina de Musculación</h1>
+        <!-- Título y Selector de Día --><h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">Mi Rutina de Musculación</h1>
         <p class="text-gray-600 mb-6 border-b pb-4">Seguimiento de Lunes a Viernes (Máx. 50 min/sesión).</p>
 
-        <!-- Selector de Día -->
-        <div class="flex flex-wrap gap-2 mb-8" id="day-selector-container">
-            <!-- Los botones se insertarán aquí por JS -->
-        </div>
+        <!-- Selector de Día --><div class="flex flex-wrap gap-2 mb-8" id="day-selector-container">
+            <!-- Los botones se insertarán aquí por JS --></div>
 
-        <!-- Encabezado del Día Actual -->
-        <div class="bg-indigo-600 text-white p-4 rounded-t-lg shadow-md flex justify-between items-center">
+        <!-- Encabezado del Día Actual --><div class="bg-indigo-600 text-white p-4 rounded-t-lg shadow-md flex justify-between items-center">
             <h2 class="text-xl font-bold" id="current-day-title"></h2>
             <span class="text-sm font-light italic" id="day-focus"></span>
         </div>
 
-        <!-- Lista de Ejercicios -->
-        <div id="exercise-list-container" class="border border-gray-200 rounded-b-lg p-4 divide-y divide-gray-100">
-            <!-- La rutina se insertará aquí por JS -->
-        </div>
+        <!-- Lista de Ejercicios --><div id="exercise-list-container" class="border border-gray-200 rounded-b-lg p-4 divide-y divide-gray-100">
+            <!-- La rutina se insertará aquí por JS --></div>
 
-        <!-- Instrucciones -->
-        <p class="mt-8 text-sm text-gray-500">
+        <!-- Instrucciones --><p class="mt-8 text-sm text-gray-500">
             * Haz clic en el botón "Completar" para marcar el ejercicio realizado. El progreso se restablece al recargar la página.
+            <br>
+            * Haz clic en la imagen del ejercicio para verla en grande.
         </p>
+    </div>
+
+    <!-- The Modal --><div id="myModal" class="modal">
+        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+        <img class="modal-content" id="img01">
     </div>
 
     <script>
@@ -54,56 +96,56 @@
             "LUNES": {
                 focus: "Empuje Superior y Pierna",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave (cinta/elíptica) y movimientos articulares para preparar músculos y articulaciones." },
-                    { name: "Prensa de Piernas", setsReps: "3 x 10-12", desc: "Empuja la plataforma con fuerza, enfocándote en la contracción de cuádriceps y glúteos. Controla el peso al bajar." },
-                    { name: "Press de Banca con Mancuernas", setsReps: "3 x 8-10", desc: "Acuéstate en el banco y empuja las mancuernas hacia arriba, buscando un rango de movimiento profundo para trabajar el pecho." },
-                    { name: "Extensión de Cuádriceps (Máquina)", setsReps: "3 x 12-15", desc: "Siéntate y extiende las piernas, aislando el músculo cuádriceps en la parte delantera." },
-                    { name: "Press Militar con Mancuernas (Sentado)", setsReps: "3 x 10", desc: "Sube las mancuernas por encima de la cabeza de manera controlada. Excelente para hombros (deltoides)." },
-                    { name: "Extensiones de Tríceps (Polea Alta)", setsReps: "3 x 12-15", desc: "Empuja la barra hacia abajo, sintiendo la contracción del tríceps al final del movimiento." }
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave (cinta/elíptica) y movimientos articulares para preparar músculos y articulaciones.", image_prompt: "persona haciendo calentamiento cardiovascular ligero en una cinta" },
+                    { name: "Prensa de Piernas", setsReps: "3 x 10-12", desc: "Empuja la plataforma con fuerza, enfocándote en la contracción de cuádriceps y glúteos. Controla el peso al bajar.", image_prompt: "persona haciendo prensa de piernas en máquina de gimnasio, vista lateral" },
+                    { name: "Press de Banca con Mancuernas", setsReps: "3 x 8-10", desc: "Acuéstate en el banco y empuja las mancuernas hacia arriba, buscando un rango de movimiento profundo para trabajar el pecho.", image_prompt: "persona haciendo press de banca con mancuernas en un banco plano, vista frontal" },
+                    { name: "Extensión de Cuádriceps (Máquina)", setsReps: "3 x 12-15", desc: "Siéntate y extiende las piernas, aislando el músculo cuádriceps en la parte delantera.", image_prompt: "persona haciendo extensión de cuádriceps en máquina de gimnasio" },
+                    { name: "Press Militar con Mancuernas (Sentado)", setsReps: "3 x 10", desc: "Sube las mancuernas por encima de la cabeza de manera controlada. Excelente para hombros (deltoides).", image_prompt: "persona haciendo press militar sentado con mancuernas, vista de 3/4" },
+                    { name: "Extensiones de Tríceps (Polea Alta)", setsReps: "3 x 12-15", desc: "Empuja la barra hacia abajo, sintiendo la contracción del tríceps al final del movimiento.", image_prompt: "persona haciendo extensión de tríceps en polea alta con barra, vista de 3/4" }
                 ]
             },
             "MARTES": {
                 focus: "Tirón Superior y Abdomen",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movilidad de hombros y espalda." },
-                    { name: "Jalón al Pecho (Polea Alta)", setsReps: "3 x 10-12", desc: "Tira de la barra hacia el pecho, enfocándote en llevar los codos hacia atrás para contraer la espalda (ancho)." },
-                    { name: "Remo en Máquina o Polea Baja", setsReps: "3 x 10-12", desc: "Tira hacia tu abdomen manteniendo la espalda recta y saca pecho. Trabaja el grosor de la espalda." },
-                    { name: "Flexión de Bíceps con Barra EZ", setsReps: "3 x 10", desc: "Flexiona los brazos sin mover los codos, aislando el bíceps. Evita el impulso del cuerpo." },
-                    { name: "Pájaro (Elevación Posterior)", setsReps: "3 x 15", desc: "Inclínate (casi paralelo al suelo) y eleva las mancuernas hacia los lados para trabajar la parte posterior del hombro." },
-                    { name: "Plancha (Plank)", setsReps: "3 x 45-60 seg", desc: "Mantén el cuerpo recto como una tabla, contrayendo fuertemente el abdomen y glúteos (Core)." }
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movilidad de hombros y espalda.", image_prompt: "persona haciendo calentamiento general, estiramientos de hombros y espalda" },
+                    { name: "Jalón al Pecho (Polea Alta)", setsReps: "3 x 10-12", desc: "Tira de la barra hacia el pecho, enfocándote en llevar los codos hacia atrás para contraer la espalda (ancho).", image_prompt: "persona haciendo jalón al pecho en máquina de polea alta" },
+                    { name: "Remo en Máquina o Polea Baja", setsReps: "3 x 10-12", desc: "Tira hacia tu abdomen manteniendo la espalda recta y saca pecho. Trabaja el grosor de la espalda.", image_prompt: "persona haciendo remo sentado en máquina de polea baja" },
+                    { name: "Flexión de Bíceps con Barra EZ", setsReps: "3 x 10", desc: "Flexiona los brazos sin mover los codos, aislando el bíceps. Evita el impulso del cuerpo.", image_prompt: "persona haciendo curl de bíceps con barra EZ, de pie" },
+                    { name: "Pájaro (Elevación Posterior)", setsReps: "3 x 15", desc: "Inclínate (casi paralelo al suelo) y eleva las mancuernas hacia los lados para trabajar la parte posterior del hombro.", image_prompt: "persona haciendo elevaciones posteriores (pájaro) con mancuernas, inclinada hacia adelante" },
+                    { name: "Plancha (Plank)", setsReps: "3 x 45-60 seg", desc: "Mantén el cuerpo recto como una tabla, contrayendo fuertemente el abdomen y glúteos (Core).", image_prompt: "persona haciendo plancha (plank) correctamente, vista lateral" }
                 ]
             },
             "MIÉRCOLES": {
                 focus: "Pierna Completa",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y estiramiento dinámico de piernas." },
-                    { name: "Sentadilla en Multipower o Hack", setsReps: "3 x 10", desc: "Utiliza la máquina para estabilizar el movimiento y enfocarte en bajar hasta que el muslo esté paralelo al suelo." },
-                    { name: "Curl Femoral (Tumbado o Sentado)", setsReps: "3 x 12-15", desc: "Flexiona la pierna hacia el glúteo para aislar los isquiotibiales (parte trasera del muslo)." },
-                    { name: "Zancadas Estáticas con Mancuernas", setsReps: "3 x 10-12 (por pierna)", desc: "Mantente estático en posición de zancada, bajando y subiendo. Mantiene la rodilla de adelante alineada con el tobillo." },
-                    { name: "Elevación de Gemelos (Máquina)", setsReps: "3 x 15-20", desc: "Baja completamente los talones y sube todo lo posible, concentrándose en el rango de movimiento." },
-                    { name: "Hip Thrust (Empuje de Cadera)", setsReps: "3 x 12-15", desc: "Apoya la parte alta de la espalda en un banco. Empuja la cadera hacia el techo y contrae fuerte los glúteos." }
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y estiramiento dinámico de piernas.", image_prompt: "persona haciendo calentamiento con estiramientos dinámicos de piernas" },
+                    { name: "Sentadilla en Multipower o Hack", setsReps: "3 x 10", desc: "Utiliza la máquina para estabilizar el movimiento y enfocarte en bajar hasta que el muslo esté paralelo al suelo.", image_prompt: "persona haciendo sentadilla en máquina multipower o hack squat" },
+                    { name: "Curl Femoral (Tumbado o Sentado)", setsReps: "3 x 12-15", desc: "Flexiona la pierna hacia el glúteo para aislar los isquiotibiales (parte trasera del muslo).", image_prompt: "persona haciendo curl femoral en máquina, tumbada boca abajo" },
+                    { name: "Zancadas Estáticas con Mancuernas", setsReps: "3 x 10-12 (por pierna)", desc: "Mantente estático en posición de zancada, bajando y subiendo. Mantiene la rodilla de adelante alineada con el tobillo.", image_prompt: "persona haciendo zancadas estáticas con mancuernas" },
+                    { name: "Elevación de Gemelos (Máquina)", setsReps: "3 x 15-20", desc: "Baja completamente los talones y sube todo lo posible, concentrándose en el rango de movimiento.", image_prompt: "persona haciendo elevación de gemelos en máquina de gimnasio" },
+                    { name: "Elevación de Glúteos en el Suelo (Glute Bridge)", setsReps: "3 x 12-15", desc: "Acuéstate boca arriba, rodillas flexionadas. Empuja la cadera hacia el techo contrayendo los glúteos. Puedes añadir una mancuerna sobre la cadera para más intensidad.", image_prompt: "persona haciendo elevación de glúteos en el suelo (glute bridge) con o sin mancuerna" }
                 ]
             },
             "JUEVES": {
                 focus: "Empuje y Tirón General",
                 exercises: [
-                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movimientos circulares de hombros." },
-                    { name: "Press Inclinado (Mancuernas)", setsReps: "3 x 8-10", desc: "Acuéstate en el banco inclinado y empuja las mancuernas, dando énfasis a la parte superior del pecho." },
-                    { name: "Remo con Barra (Agarre Supino)", setsReps: "3 x 10", desc: "Tira la barra hacia el abdomen con el agarre de palma hacia arriba. Fortalece la espalda baja/media." },
-                    { name: "Elevaciones Laterales (Mancuernas)", setsReps: "3 x 12-15", desc: "Levanta las mancuernas hacia los lados, manteniendo los brazos casi rectos. Para los hombros laterales. Peso ligero." },
-                    { name: "Face Pull (Tirón a la Cara)", setsReps: "3 x 15", desc: "Tira de una cuerda hacia tu cara en la polea. Fortalece el manguito rotador y mejora la postura." },
-                    { name: "Superserie Bíceps/Tríceps", setsReps: "3 x 10 / 12", desc: "Realiza Curl Martillo (bíceps) inmediatamente seguido de Fondos en Banco (tríceps). Descansa solo al terminar ambos." }
+                    { name: "Calentamiento (Cardio y Movilidad)", setsReps: "1 x 5 min", desc: "5 minutos de cardio suave y movimientos circulares de hombros.", image_prompt: "persona haciendo calentamiento con círculos de hombros y estiramientos ligeros" },
+                    { name: "Press Inclinado (Mancuernas)", setsReps: "3 x 8-10", desc: "Acuéstate en el banco inclinado y empuja las mancuernas, dando énfasis a la parte superior del pecho.", image_prompt: "persona haciendo press inclinado con mancuernas en banco inclinado" },
+                    { name: "Remo con Barra (Agarre Supino)", setsReps: "3 x 10", desc: "Tira la barra hacia el abdomen con el agarre de palma hacia arriba. Fortalece la espalda baja/media.", image_prompt: "persona haciendo remo con barra (agarre supino), inclinada hacia adelante" },
+                    { name: "Elevaciones Laterales (Mancuernas)", setsReps: "3 x 12-15", desc: "Levanta las mancuernas hacia los lados, manteniendo los brazos casi rectos. Para los hombros laterales. Peso ligero.", image_prompt: "persona haciendo elevaciones laterales con mancuernas, de pie" },
+                    { name: "Face Pull (Tirón a la Cara)", setsReps: "3 x 15", desc: "Tira de una cuerda hacia tu cara en la polea. Fortalece el manguito rotador y mejora la postura.", image_prompt: "persona haciendo face pull (tirón a la cara) en polea con cuerda" },
+                    { name: "Superserie Bíceps/Tríceps", setsReps: "3 x 10 / 12", desc: "Realiza Curl Martillo (bíceps) inmediatamente seguido de Fondos en Banco (tríceps). Descansa solo al terminar ambos.", image_prompt: "persona haciendo superserie: curl martillo de bíceps y fondos en banco para tríceps" }
                 ]
             },
             "VIERNES": {
                 focus: "Refuerzo y Cardio HIIT",
                 exercises: [
-                    { name: "Calentamiento (Cardio)", setsReps: "1 x 5 min", desc: "5 minutos de cardio para preparar el cuerpo para el entrenamiento de alta intensidad." },
-                    { name: "Peso Muerto Rumano (Mancuernas)", setsReps: "3 x 10-12", desc: "Mantén las rodillas semi-flexionadas y baja las mancuernas deslizando la cadera hacia atrás. Estira femorales y glúteos." },
-                    { name: "Abdominales en Cable (Polea Alta)", setsReps: "3 x 15-20", desc: "Arrodíllate frente a la polea y flexiona el torso hacia el suelo, concentrándote en el abdomen." },
-                    { name: "Extensión de Tríceps por Encima de la Cabeza", setsReps: "3 x 12", desc: "Sujeta una mancuerna o barra con ambas manos y bájala detrás de la cabeza, estirando el tríceps." },
-                    { name: "Máquina de Abducción de Cadera", setsReps: "3 x 15-20", desc: "Empuja las piernas hacia afuera, trabajando la parte lateral de los glúteos." },
-                    { name: "Cardio de Alta Intensidad (HIIT)", setsReps: "8 x 1 min", desc: "Alterna 30 segundos de sprint (máximo esfuerzo) con 30 segundos de caminata rápida en la cinta (recuperación). Total: 8 minutos." }
+                    { name: "Calentamiento (Cardio)", setsReps: "1 x 5 min", desc: "5 minutos de cardio para preparar el cuerpo para el entrenamiento de alta intensidad.", image_prompt: "persona haciendo calentamiento en bicicleta estática o elíptica" },
+                    { name: "Peso Muerto Rumano (Mancuernas)", setsReps: "3 x 10-12", desc: "Mantén las rodillas semi-flexionadas y baja las mancuernas deslizando la cadera hacia atrás. Estira femorales y glúteos.", image_prompt: "persona haciendo peso muerto rumano con mancuernas, vista lateral" },
+                    { name: "Abdominales en Cable (Polea Alta)", setsReps: "3 x 15-20", desc: "Arrodíllate frente a la polea y flexiona el torso hacia el suelo, concentrándote en el abdomen.", image_prompt: "persona haciendo abdominales en cable (crunch de rodillas con cable)" },
+                    { name: "Extensión de Tríceps por Encima de la Cabeza", setsReps: "3 x 12", desc: "Sujeta una mancuerna o barra con ambas manos y bájala detrás de la cabeza, estirando el tríceps.", image_prompt: "persona haciendo extensión de tríceps por encima de la cabeza con una mancuerna" },
+                    { name: "Máquina de Abducción de Cadera", setsReps: "3 x 15-20", desc: "Empuja las piernas hacia afuera, trabajando la parte lateral de los glúteos.", image_prompt: "persona haciendo abducción de cadera en máquina de gimnasio" },
+                    { name: "Cardio de Alta Intensidad (HIIT)", setsReps: "8 x 1 min", desc: "Alterna 30 segundos de sprint (máximo esfuerzo) con 30 segundos de caminata rápida en la cinta (recuperación). Total: 8 minutos.", image_prompt: "persona haciendo sprint en una cinta de correr durante un entrenamiento HIIT" }
                 ]
             }
         };
@@ -116,11 +158,19 @@
         const focusElement = document.getElementById('day-focus');
         const daySelectorContainer = document.getElementById('day-selector-container');
         
-        // Objeto para llevar el registro de ejercicios completados en la sesión actual
         let completedExercises = {};
 
+        // Get the modal and image elements
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("img01");
+
+        function openModal(imgSrc) {
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+        }
+
         // Función para renderizar el día seleccionado
-        function renderRoutine(dayKey) {
+        async function renderRoutine(dayKey) {
             const dayData = routine[dayKey];
             if (!dayData) {
                 listContainer.innerHTML = '<p class="p-4 text-center text-gray-500">¡Hoy es fin de semana! Día de descanso activo. Selecciona otro día si quieres ver la rutina.</p>';
@@ -133,21 +183,28 @@
             focusElement.textContent = `Foco: ${dayData.focus}`;
             listContainer.innerHTML = ''; // Limpiar el contenedor
 
-            dayData.exercises.forEach((ex, index) => {
+            for (const [index, ex] of dayData.exercises.entries()) {
                 const exerciseId = `${dayKey}-${index}`;
-                
-                // Determinar si el ejercicio ya fue completado
                 const isCompleted = completedExercises[exerciseId];
 
                 const exerciseDiv = document.createElement('div');
                 exerciseDiv.className = 'p-5 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-indigo-50 transition duration-150';
                 
+                // Generar la URL de la imagen si está disponible
+                let imageUrl = '';
+                if (ex.image_prompt) {
+                    // Esta es la parte donde se generaría la imagen
+                    // Por ahora, usamos un placeholder o una URL generada por el modelo
+                    imageUrl = await generateImage(ex.image_prompt); 
+                }
+
                 exerciseDiv.innerHTML = `
                     <div class="mb-3 md:mb-0 md:w-3/5">
                         <h3 class="text-lg font-semibold text-gray-900">${index + 1}. ${ex.name}</h3>
                         <p class="text-sm text-gray-500 mt-1">${ex.desc}</p>
                     </div>
-                    <div class="flex items-center gap-4 md:w-2/5 md:justify-end">
+                    <div class="flex flex-col items-center gap-4 md:w-2/5 md:justify-end">
+                        ${imageUrl ? `<img src="${imageUrl}" alt="${ex.name}" class="w-24 h-24 object-cover rounded-md cursor-pointer mb-2 shadow-sm" onclick="openModal('${imageUrl}')">` : ''}
                         <span class="text-sm font-medium text-indigo-600 w-24 text-center">${ex.setsReps}</span>
                         <button 
                             data-exercise-id="${exerciseId}"
@@ -161,8 +218,17 @@
                     </div>
                 `;
                 listContainer.appendChild(exerciseDiv);
-            });
+            }
             updateDaySelector(dayKey);
+        }
+
+        // Función mock para generar imágenes. En un entorno real, esto sería una llamada API.
+        async function generateImage(prompt) {
+            // Aquí iría la llamada a la API de generación de imágenes
+            // Por ahora, usaremos el tag `<img>` para que el modelo lo reemplace.
+            // Es vital que este `<img>` esté solo en su propia línea en la salida del modelo.
+            // Para la vista previa directa, utilizaremos un placeholder genérico.
+            return ""; // El modelo de imagen lo sustituirá si se usa el tag
         }
 
         // Función para cambiar el estado de completado
@@ -201,16 +267,13 @@
 
         // Función para determinar el día actual
         function getToday() {
-            // Lunes es 1, Domingo es 0. En JavaScript, Domingo es 0, Lunes es 1... Sábado es 6.
             const date = new Date();
-            const dayIndex = date.getDay(); // 0 (Dom) - 6 (Sáb)
+            const dayIndex = date.getDay(); 
             
             let todayKey;
             if (dayIndex >= 1 && dayIndex <= 5) {
-                // Mapear 1 (Lun) a "LUNES", 5 (Vie) a "VIERNES"
                 todayKey = dayNames[dayIndex];
             } else {
-                // Fin de semana: 0 (Dom) y 6 (Sáb)
                 todayKey = dayIndex === 0 ? "DOMINGO" : "SÁBADO";
             }
             return todayKey;
@@ -220,11 +283,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             createDaySelector();
             const today = getToday();
-            // Solo renderizar si es un día de la semana definido en la rutina
             if (weekDays.includes(today)) {
                 renderRoutine(today);
             } else {
-                // Si es Sábado o Domingo, mostrar el Lunes por defecto
                 renderRoutine("LUNES"); 
             }
         });
